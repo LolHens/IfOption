@@ -24,5 +24,5 @@ lazy val settings = Seq(
 
 )
 
-lazy val root = crossProject.crossType(CrossType.Full).in(file("."))
+lazy val root = project.in(file("."))
   .settings(settings: _*)
