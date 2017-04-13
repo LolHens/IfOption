@@ -1,4 +1,4 @@
-package org.lolhens.condition
+package org.lolhens.ifoption
 
 import scala.language.implicitConversions
 

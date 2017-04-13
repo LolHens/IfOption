@@ -1,4 +1,4 @@
-package org.lolhens.condition
+package org.lolhens.ifoption
 
 import cats.implicits._
 
@@ -9,6 +9,7 @@ import scala.language.implicitConversions
   */
 class AnyConditions[T](val self: T) extends AnyVal {
   def If(condition: => Boolean): Either[T, T] = If_((_: T) => condition)
+
   def If_(condition: T => Boolean): Either[T, T] =
     if (condition(self))
       Either.right(self)
@@ -16,6 +17,7 @@ class AnyConditions[T](val self: T) extends AnyVal {
       Either.left(self)
 
   def IfNot(condition: => Boolean): Either[T, T] = IfNot_((_: T) => condition)
+
   def IfNot_(condition: T => Boolean): Either[T, T] =
     if (condition(self))
       Either.left(self)
@@ -24,5 +26,5 @@ class AnyConditions[T](val self: T) extends AnyVal {
 }
 
 object AnyConditions {
-  implicit def fromAny[T](any: T): AnyConditions[T] = new AnyConditions[T](any)
+  implicit def any2AnyConditions[T](any: T): AnyConditions[T] = new AnyConditions[T](any)
 }
