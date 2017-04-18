@@ -16,10 +16,17 @@ inThisBuild(Seq(
   publishTo := Some(Resolver.file("file", new File("target/releases")))
 ))
 
-lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Full).in(file("."))
-  .settings(libraryDependencies ++= Seq(
-    //toCrossGroupID("org.typelevel") %%% "cats" % "0.9.0"
-  ))
+lazy val root = project.in(file("."))
+  .settings(publishArtifact := false)
+  .aggregate(ifoptionJVM, ifoptionJS)
+
+lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Pure)
+  .settings(name := (name in ThisBuild).value)
+  .settings(
+    libraryDependencies ++= Seq(
+      //toCrossGroupID("org.typelevel") %%% "cats" % "0.9.0"
+    )
+  )
 
 lazy val ifoptionJVM = ifoption.jvm
 lazy val ifoptionJS = ifoption.js
