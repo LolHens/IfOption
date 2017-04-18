@@ -1,7 +1,5 @@
 package org.lolhens.ifoption
 
-import cats.implicits._
-
 import scala.language.implicitConversions
 
 /**
@@ -12,17 +10,17 @@ class AnyConditions[T](val self: T) extends AnyVal {
 
   def If_(condition: T => Boolean): Either[T, T] =
     if (condition(self))
-      Either.right(self)
+      Right(self)
     else
-      Either.left(self)
+      Left(self)
 
   def IfNot(condition: => Boolean): Either[T, T] = IfNot_((_: T) => condition)
 
   def IfNot_(condition: T => Boolean): Either[T, T] =
     if (condition(self))
-      Either.left(self)
+      Left(self)
     else
-      Either.right(self)
+      Right(self)
 }
 
 object AnyConditions {

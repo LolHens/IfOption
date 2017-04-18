@@ -1,6 +1,6 @@
 package org.lolhens.ifoption
 
-import cats.implicits._
+import org.lolhens.ifoption.OptionConditions._
 
 import scala.language.implicitConversions
 
@@ -25,7 +25,7 @@ class OptionConditions[T](val self: Option[T]) extends AnyVal {
 
   def ElseIf_[E >: T](value: () => Option[E]): Option[E] = ElseIf[E](value())
 
-  def ElseThen[A](value: => A): Either[A, T] = Either.fromOption(self, value)
+  def ElseThen[A](value: => A): Either[A, T] = self Then_ (Right(_)) Else Left(value)
 
   def ElseThen_[A](value: () => A): Either[A, T] = ElseThen[A](value())
 
