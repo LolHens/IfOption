@@ -3,7 +3,7 @@ import sbtcrossproject.{CrossType, crossProject}
 inThisBuild(Seq(
   name := "ifoption",
   organization := "org.lolhens",
-  version := "0.1.0",
+  version := "0.1.1",
 
   scalaVersion := "2.12.1",
 

@@ -54,6 +54,11 @@ class EitherConditions[A, B](val self: Either[A, B]) extends AnyVal {
 
   def ElseNone: Option[B] = self.toOption
 
+  def Either(implicit ev: A =:= B): B = self match {
+    case Right(right) => right
+    case Left(left) => left
+  }
+
   def If[C](condition: => Boolean)(implicit ca: A <:< C, cb: B <:< C): Either[C, B] = If_[C]((_: B) => condition)
 
   def If_[C](condition: B => Boolean)(implicit ca: A <:< C, cb: B <:< C): Either[C, B] = self match {
