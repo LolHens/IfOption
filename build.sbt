@@ -1,4 +1,4 @@
-//import sbtcrossproject.{CrossType, crossProject}
+import sbtcrossproject.{CrossType, crossProject}
 
 name := (name in ThisBuild).value
 
@@ -22,7 +22,7 @@ lazy val root = project.in(file("."))
   .settings(publishArtifact := false)
   .aggregate(ifoptionJVM, ifoptionJS)
 
-lazy val ifoption = crossProject/*(JVMPlatform, JSPlatform)*/.crossType(CrossType.Pure)
+lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Pure)
   .settings(name := (name in ThisBuild).value)
   .settings(
     libraryDependencies ++= Seq(
