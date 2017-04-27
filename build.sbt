@@ -1,5 +1,7 @@
 import sbtcrossproject.{CrossType, crossProject}
 
+name := (name in ThisBuild).value
+
 inThisBuild(Seq(
   name := "ifoption",
   organization := "org.lolhens",
