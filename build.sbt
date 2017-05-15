@@ -5,9 +5,9 @@ name := (name in ThisBuild).value
 inThisBuild(Seq(
   name := "ifoption",
   organization := "org.lolhens",
-  version := "0.1.1",
+  version := "0.1.2",
 
-  scalaVersion := "2.12.1",
+  scalaVersion := "2.12.2",
 
   externalResolvers := Seq("artifactory" at "http://lolhens.no-ip.org/artifactory/maven-public/"),
 
@@ -20,7 +20,13 @@ inThisBuild(Seq(
 
 lazy val root = project.in(file("."))
   .settings(publishArtifact := false)
-  .aggregate(ifoptionJVM, ifoptionJS)
+  .aggregate(
+    ifoptionJVM_2_11,
+    ifoptionJVM_2_12,
+    ifoptionJVM_2_13,
+    ifoptionJS_2_11,
+    ifoptionJS_2_12
+  )
 
 lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Pure)
   .settings(name := (name in ThisBuild).value)
@@ -30,5 +36,8 @@ lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Pu
     )
   )
 
-lazy val ifoptionJVM = ifoption.jvm
-lazy val ifoptionJS = ifoption.js
+lazy val ifoptionJVM_2_11 = ifoption.jvm.cross("2.11.9").settings(name := (name in ThisBuild).value)
+lazy val ifoptionJVM_2_12 = ifoption.jvm.cross("2.12.2").settings(name := (name in ThisBuild).value)
+lazy val ifoptionJVM_2_13 = ifoption.jvm.cross("2.13.0-M1").settings(name := (name in ThisBuild).value)
+lazy val ifoptionJS_2_11 = ifoption.js.cross("2.11.9").settings(name := (name in ThisBuild).value)
+lazy val ifoptionJS_2_12 = ifoption.js.cross("2.12.2").settings(name := (name in ThisBuild).value)

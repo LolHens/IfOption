@@ -1,5 +1,7 @@
 package org.lolhens.ifoption
 
+import org.lolhens.ifoption.implicits._
+
 import scala.language.implicitConversions
 
 /**
@@ -8,7 +10,7 @@ import scala.language.implicitConversions
 class EitherConditions[A, B](val self: Either[A, B]) extends AnyVal {
   def Then[D](function: => D): Either[A, D] = Then_[D]((_: B) => function)
 
-  def Then_[D](function: B => D): Either[A, D] = self.map[D](function)
+  def Then_[D](function: B => D): Either[A, D] = self.right.map[D](function)
 
   def ThenIf[C, D](function: => Option[D])(implicit ca: A <:< C, cb: B <:< C): Either[C, D] = ThenIf_[C, D]((_: B) => function)
 
@@ -43,7 +45,8 @@ class EitherConditions[A, B](val self: Either[A, B]) extends AnyVal {
     case Right(right) => Right[A, D](right)
   }
 
-  def ElseIf_[D >: B](function: A => Either[_, D])(implicit dummy: DummyImplicit): Either[A, D] = ElseIf_[D](function.andThen(_.toOption))
+  def ElseIf_[D >: B](function: A => Either[_, D])(implicit dummy: DummyImplicit): Either[A, D] =
+    ElseIf_[D](function.andThen(_.ElseNone))
 
   def ElseThen[C](function: => C): Either[C, B] = ElseThen_[C]((_: A) => function)
 
@@ -52,7 +55,7 @@ class EitherConditions[A, B](val self: Either[A, B]) extends AnyVal {
     case Right(right) => Right[C, B](right)
   }
 
-  def ElseNone: Option[B] = self.toOption
+  def ElseNone: Option[B] = self.right.toOption
 
   def Either(implicit ev: A =:= B): B = self match {
     case Right(right) => right
