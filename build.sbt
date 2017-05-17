@@ -36,8 +36,8 @@ lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Pu
     )
   )
 
-lazy val ifoptionJVM_2_11 = ifoption.jvm.cross("2.11.9").settings(name := (name in ThisBuild).value)
+lazy val ifoptionJVM_2_11 = ifoption.jvm.cross("2.11.11").settings(name := (name in ThisBuild).value)
 lazy val ifoptionJVM_2_12 = ifoption.jvm.cross("2.12.2").settings(name := (name in ThisBuild).value)
 lazy val ifoptionJVM_2_13 = ifoption.jvm.cross("2.13.0-M1").settings(name := (name in ThisBuild).value)
-lazy val ifoptionJS_2_11 = ifoption.js.cross("2.11.9").settings(name := (name in ThisBuild).value)
+lazy val ifoptionJS_2_11 = ifoption.js.cross("2.11.11").settings(name := (name in ThisBuild).value)
 lazy val ifoptionJS_2_12 = ifoption.js.cross("2.12.2").settings(name := (name in ThisBuild).value)
