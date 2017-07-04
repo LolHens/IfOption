@@ -1,17 +1,16 @@
-import sbtcrossproject.{CrossType, crossProject}
-
 name := (name in ThisBuild).value
 
 inThisBuild(Seq(
   name := "ifoption",
   organization := "org.lolhens",
-  version := "0.1.2",
+  version := "0.2.0",
 
   scalaVersion := "2.12.2",
 
-  externalResolvers := Seq("artifactory" at "http://lolhens.no-ip.org/artifactory/maven-public/"),
-
-  dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang"),
+  externalResolvers := Seq(
+    "artifactory-maven" at "http://lolhens.no-ip.org/artifactory/maven-public/",
+    Resolver.url("artifactory-ivy", url("http://lolhens.no-ip.org/artifactory/ivy-public/"))(Resolver.ivyStylePatterns)
+  ),
 
   scalacOptions ++= Seq("-Xmax-classfile-name", "254"),
 
@@ -32,7 +31,7 @@ lazy val ifoption = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.Pu
   .settings(name := (name in ThisBuild).value)
   .settings(
     libraryDependencies ++= Seq(
-      //toCrossGroupID("org.typelevel") %%% "cats" % "0.9.0"
+      //"org.typelevel" %%% "cats" % "0.9.0"
     )
   )
 
