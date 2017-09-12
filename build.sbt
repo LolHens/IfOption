@@ -8,13 +8,12 @@ inThisBuild(Seq(
   scalaVersion := "2.12.3",
 
   externalResolvers := Seq(
+    Resolver.defaultLocal,
     "artifactory-maven" at "http://lolhens.no-ip.org/artifactory/maven-public/",
     Resolver.url("artifactory-ivy", url("http://lolhens.no-ip.org/artifactory/ivy-public/"))(Resolver.ivyStylePatterns)
   ),
 
-  scalacOptions ++= Seq("-Xmax-classfile-name", "254"),
-
-  publishTo := Some(Resolver.file("file", new File("target/releases")))
+  scalacOptions ++= Seq("-Xmax-classfile-name", "127")
 ))
 
 lazy val root = project.in(file("."))
