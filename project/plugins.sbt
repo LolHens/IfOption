@@ -15,6 +15,6 @@ addSbtPlugin("com.lucidchart" % "sbt-cross" % "3.0")
 
 addSbtPlugin("org.scala-native" % "sbt-crossproject" % "0.2.2")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.0-M1")
+//addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.0-M1")
 
-addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.3.3")
+//addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.3.3")
