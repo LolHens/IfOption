@@ -7,19 +7,19 @@ import scala.language.higherKinds
 
 class MonoidKConditions[F[_] : Foldable : MonoidK, E, A](val self: F[A])(implicit F0: MonadError[F, E]) {
 
-  def Then[B](function: => B): F[B] = Then_(_ => function)
+  def Then[B](f: => B): F[B] = self.map[B](_ => f)
 
-  def Then_[B](function: A => B): F[B] = self.map[B](function)
+  def Then_[B](f: A => B): F[B] = self.map[B](f)
 
-  def ThenIf[B](function: => F[B]): F[B] = ThenIf_(_ => function)
+  def ThenIf[B](f: => F[B]): F[B] = self.flatMap[B](_ => f)
 
-  def ThenIf_[B](function: A => F[B]): F[B] = self.flatMap[B](function)
+  def ThenIf_[B](f: A => F[B]): F[B] = self.flatMap[B](f)
 
-  def Else[B >: A](value: => B): B = self.widen[B].foldl(value)((_, e) => e)
+  def Else[B >: A](f: => B): B = self.widen[B].foldl(f)((_, e) => e)
 
-  //def Else_[B >: A](f: E => B): B = ???
+  def Else_[B >: A](f: E => B): B = self.widen[B].handleError(f).foldl(null.asInstanceOf[B])((_, e) => e)
 
-  def ElseIf[B >: A](value: => F[B]): F[B] = ElseIf_(_ => value)
+  def ElseIf[B >: A](f: => F[B]): F[B] = self.widen[B].handleErrorWith(_ => f)
 
   def ElseIf_[B >: A](f: E => F[B]): F[B] = self.widen[B].handleErrorWith(f)
 
